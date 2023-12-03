@@ -32,7 +32,7 @@ const SignupForm: React.FC = () => {
 
     const configValue: string | undefined = process.env.REACT_APP_API_URL;
     axios
-      .post(`${configValue}/`, {
+      .post(`${configValue}/register`, {
         email: values.email,
         password: values.password,
       })

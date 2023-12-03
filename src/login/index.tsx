@@ -40,7 +40,6 @@ const LogInForm: React.FC = () => {
   };
   const handleSubmit = (values: typeof initialValues, actions: any) => {
     const configValue: string | undefined = process.env.REACT_APP_API_URL;
-    console.log("configValue => ", configValue);
     axios
       .post(`${configValue}/login`, {
         email: values.email,
