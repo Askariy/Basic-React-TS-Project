@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import Card from "./taskCard";
 import { useAuthContext } from "../context/authContext";
 
@@ -19,7 +19,8 @@ const AddTaskSchema = Yup.object().shape({
 });
 
 const Task: React.FC = () => {
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
+  const navigate = useNavigate();
 
   const configValue: string | undefined = process.env.REACT_APP_API_URL;
 
@@ -99,6 +100,15 @@ const Task: React.FC = () => {
     }
   };
 
+  function handleLogout() {
+    setUser({
+      data: {},
+      isAuthenticated: false,
+      token: null,
+    });
+    navigate("/login");
+  }
+
   useEffect(() => {
     axios
       .get(`${configValue}/list-tasks`, {
@@ -116,6 +126,11 @@ const Task: React.FC = () => {
 
   return (
     <>
+      <Box display="flex" justifyContent="flex-end" m={2}>
+        <Button variant="contained" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Box>
       <Container component="main" maxWidth="sm">
         <Box display="flex" justifyContent="center" sx={{ mt: 8, mb: 4 }}>
           <Typography component="h1" variant="h4">
